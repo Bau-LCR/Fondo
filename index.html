@@ -8,10 +8,13 @@
 </head>
 <body>
 
-  <!-- Particle canvas -->
+  <!-- Background star canvas (layer 1) -->
   <canvas id="stars"></canvas>
 
-  <!-- Orb bottom-right -->
+  <!-- Node connections + CSS particles (layer 2) -->
+  <div id="particles"></div>
+
+  <!-- Orb bottom-right (layer 3) -->
   <div class="orb-wrapper">
     <div class="orb-frame">
       <div class="orb-outer-glow"></div>
@@ -27,5 +30,6 @@
   </div>
 
   <script src="main.js"></script>
+  <script src="particles.js"></script>
 </body>
 </html>
