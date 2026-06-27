@@ -1,0 +1,256 @@
+/* ─── Reset ─── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ─── Root ─── */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #020810;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  user-select: none;
+}
+
+/* ─── Deep-space background gradient ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 88% 88%, rgba(18, 55, 185, 0.22) 0%, transparent 60%),
+    radial-gradient(ellipse 45% 40% at  8% 12%, rgba(12, 35, 120, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 50% at 55% 45%, rgba(6, 15, 55, 0.40)   0%, transparent 80%),
+    linear-gradient(175deg, #060d1f 0%, #020810 60%, #010610 100%);
+  pointer-events: none;
+}
+
+/* ─── Nebula wisps ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 35% 25% at 75% 72%, rgba(8, 35, 150, 0.14) 0%, transparent 100%),
+    radial-gradient(ellipse 28% 22% at 22% 28%, rgba(5, 22, 100, 0.09) 0%, transparent 100%),
+    radial-gradient(ellipse 20% 18% at 48% 62%, rgba(6, 28, 120, 0.08) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ─── Star canvas ─── */
+#stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Orb wrapper (float + anchor) ─── */
+.orb-wrapper {
+  position: fixed;
+  bottom: 50px;
+  right: 70px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: orbFloat 7.5s ease-in-out infinite;
+}
+
+/* ─── Dark circular frame (the "viewport" ring) ─── */
+.orb-frame {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  /* deep space interior */
+  background: radial-gradient(
+    circle at 50% 50%,
+    #070e24 0%,
+    #030818 55%,
+    #020810 100%
+  );
+  border: 1.5px solid rgba(45, 90, 210, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(20, 50, 160, 0.18),
+    inset 0 0 70px rgba(0, 4, 30, 0.92);
+  animation: frameEdge 6s ease-in-out infinite;
+}
+
+/* ─── Ambient glow behind frame ─── */
+.orb-outer-glow {
+  position: absolute;
+  inset: -50px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(28, 85, 220, 0.22) 0%,
+    rgba(18, 55, 190, 0.09) 45%,
+    transparent 70%
+  );
+  animation: outerGlow 5s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Expanding ring pulses ─── */
+.orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(55, 120, 255, 0.38);
+  pointer-events: none;
+  z-index: 0;
+}
+.ring-a {
+  inset: -18px;
+  animation: ringPulse 5s ease-out infinite;
+}
+.ring-b {
+  inset: -40px;
+  border-color: rgba(35, 95, 220, 0.22);
+  animation: ringPulse 5s ease-out infinite;
+  animation-delay: 2.5s;
+}
+
+/* ─── The glowing planet sphere ─── */
+.orb-sphere {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  z-index: 2;
+  background: radial-gradient(
+    circle at 36% 30%,
+    #d8eeff 0%,
+    #80c6ff 6%,
+    #2d8eff 18%,
+    #1058e0 38%,
+    #082dbb 58%,
+    #031070 80%,
+    #010830 100%
+  );
+  box-shadow:
+    0 0 38px  rgba(48, 115, 255, 1.00),
+    0 0 72px  rgba(30,  88, 235, 0.60),
+    0 0 130px rgba(18,  58, 205, 0.28),
+    0 0 200px rgba(10,  38, 170, 0.10),
+    inset 0 -18px 45px rgba(0, 4, 55, 0.55),
+    inset 6px  6px 28px rgba(140, 205, 255, 0.18);
+  animation: spherePulse 5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* Bright specular highlight */
+.orb-highlight {
+  position: absolute;
+  top: 14%;
+  left: 16%;
+  width: 40%;
+  height: 34%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(190, 235, 255, 0.35) 45%,
+    transparent 100%
+  );
+  filter: blur(3.5px);
+  transform: rotate(-18deg);
+}
+
+/* Limb-darkening atmosphere edge */
+.orb-atmosphere {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 60%,
+    rgba(5, 30, 120, 0.38) 85%,
+    rgba(2, 12, 60, 0.70) 100%
+  );
+}
+
+/* Subtle shimmer sweep */
+.orb-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(100, 180, 255, 0.08) 50%,
+    transparent 70%
+  );
+  animation: shimmerSweep 8s linear infinite;
+}
+
+/* ─── Label ─── */
+.orb-label {
+  color: rgba(170, 195, 240, 0.50);
+  font-size: 10.5px;
+  letter-spacing: 3.5px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* ═══ Keyframes ═══ */
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+@keyframes spherePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 38px  rgba(48, 115, 255, 1.00),
+      0 0 72px  rgba(30,  88, 235, 0.60),
+      0 0 130px rgba(18,  58, 205, 0.28),
+      0 0 200px rgba(10,  38, 170, 0.10),
+      inset 0 -18px 45px rgba(0, 4, 55, 0.55),
+      inset 6px  6px 28px rgba(140, 205, 255, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 55px  rgba(60, 135, 255, 1.00),
+      0 0 105px rgba(40, 108, 245, 0.72),
+      0 0 170px rgba(24,  72, 218, 0.36),
+      0 0 250px rgba(14,  48, 182, 0.14),
+      inset 0 -22px 55px rgba(0, 4, 55, 0.55),
+      inset 8px  8px 38px rgba(170, 220, 255, 0.28);
+  }
+}
+
+@keyframes frameEdge {
+  0%, 100% { border-color: rgba(45, 90, 210, 0.28); }
+  50%       { border-color: rgba(60, 125, 245, 0.48); }
+}
+
+@keyframes outerGlow {
+  0%, 100% { opacity: 0.75; transform: scale(1.00); }
+  50%       { opacity: 1.00; transform: scale(1.10); }
+}
+
+@keyframes ringPulse {
+  0%   { opacity: 0.85; transform: scale(1.00); }
+  75%  { opacity: 0.00; transform: scale(1.65); }
+  100% { opacity: 0.00; transform: scale(1.65); }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
