@@ -7,29 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- Background star canvas (layer 1) -->
+  <!-- z-0 : Nebula plasma       (aurora.js — inserted programmatically) -->
+  <!-- z-1 : Star field canvas                                           -->
   <canvas id="stars"></canvas>
-
-  <!-- Node connections + CSS particles (layer 2) -->
+  <!-- z-2 : Node connections + CSS particles                            -->
   <div id="particles"></div>
-
-  <!-- Orb bottom-right (layer 3) -->
-  <div class="orb-wrapper">
-    <div class="orb-frame">
-      <div class="orb-outer-glow"></div>
-      <div class="orb-ring ring-a"></div>
-      <div class="orb-ring ring-b"></div>
-      <div class="orb-sphere">
-        <div class="orb-highlight"></div>
-        <div class="orb-atmosphere"></div>
-        <div class="orb-shimmer"></div>
-      </div>
-    </div>
-    <span class="orb-label">CUT-REAL AI</span>
-  </div>
+  <!-- z-3 : Ethereal aurora / lightning / rings (ethereal.js)          -->
+  <!-- z-4 : Hyperspace warp     (aurora.js — appended programmatically) -->
 
   <script src="main.js"></script>
   <script src="particles.js"></script>
+  <script src="aurora.js"></script>
+  <script src="ethereal.js"></script>
 </body>
 </html>
