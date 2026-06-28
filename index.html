@@ -15,6 +15,23 @@
   <!-- z-3 : Ethereal aurora / lightning / rings (ethereal.js)          -->
   <!-- z-4 : Hyperspace warp     (aurora.js — appended programmatically) -->
 
+  <!-- z-5 : Logo — Nexus Resonance ─────────────────────────────────────
+       logo.png debe ser PNG con fondo transparente para mejor resultado.
+       Si el archivo tiene fondo blanco, se puede usar mix-blend-mode:
+       screen en .logo-img como alternativa visual.
+  ──────────────────────────────────────────────────────────────────── -->
+  <div id="logo-nexus">
+    <div class="logo-floater">
+      <div class="logo-glow-bg"></div>
+      <div class="logo-pulse pulse-a"></div>
+      <div class="logo-pulse pulse-b"></div>
+      <div class="logo-pulse pulse-c"></div>
+      <div class="logo-arc arc-outer"></div>
+      <div class="logo-arc arc-inner"></div>
+      <img src="logo.png" alt="Logo" class="logo-img" />
+    </div>
+  </div>
+
   <script src="main.js"></script>
   <script src="particles.js"></script>
   <script src="aurora.js"></script>
