@@ -79,3 +79,378 @@ body::after {
   88%  {                                opacity: 0.65;}
   100% { transform: translateY(-190px); opacity: 0;   }
 }
+
+/* ─── Orb wrapper (float + anchor) ─── */
+.orb-wrapper {
+  position: fixed;
+  bottom: 50px;
+  right: 70px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: orbFloat 7.5s ease-in-out infinite;
+}
+
+/* ─── Dark circular frame (the "viewport" ring) ─── */
+.orb-frame {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    #070e24 0%,
+    #030818 55%,
+    #020810 100%
+  );
+  border: 1.5px solid rgba(45, 90, 210, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px rgba(20, 50, 160, 0.18),
+    inset 0 0 70px rgba(0, 4, 30, 0.92);
+  animation: frameEdge 6s ease-in-out infinite;
+}
+
+/* ─── Ambient glow behind frame ─── */
+.orb-outer-glow {
+  position: absolute;
+  inset: -50px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(28, 85, 220, 0.22) 0%,
+    rgba(18, 55, 190, 0.09) 45%,
+    transparent 70%
+  );
+  animation: outerGlow 5s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Expanding ring pulses ─── */
+.orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(55, 120, 255, 0.38);
+  pointer-events: none;
+  z-index: 0;
+}
+.ring-a {
+  inset: -18px;
+  animation: ringPulse 5s ease-out infinite;
+}
+.ring-b {
+  inset: -40px;
+  border-color: rgba(35, 95, 220, 0.22);
+  animation: ringPulse 5s ease-out infinite;
+  animation-delay: 2.5s;
+}
+
+/* ─── The glowing planet sphere ─── */
+.orb-sphere {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  z-index: 2;
+  background: radial-gradient(
+    circle at 36% 30%,
+    #d8eeff 0%,
+    #80c6ff 6%,
+    #2d8eff 18%,
+    #1058e0 38%,
+    #082dbb 58%,
+    #031070 80%,
+    #010830 100%
+  );
+  box-shadow:
+    0 0 38px  rgba(48, 115, 255, 1.00),
+    0 0 72px  rgba(30,  88, 235, 0.60),
+    0 0 130px rgba(18,  58, 205, 0.28),
+    0 0 200px rgba(10,  38, 170, 0.10),
+    inset 0 -18px 45px rgba(0, 4, 55, 0.55),
+    inset 6px  6px 28px rgba(140, 205, 255, 0.18);
+  animation: spherePulse 5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* Bright specular highlight */
+.orb-highlight {
+  position: absolute;
+  top: 14%;
+  left: 16%;
+  width: 40%;
+  height: 34%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(190, 235, 255, 0.35) 45%,
+    transparent 100%
+  );
+  filter: blur(3.5px);
+  transform: rotate(-18deg);
+}
+
+/* Limb-darkening atmosphere edge */
+.orb-atmosphere {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 60%,
+    rgba(5, 30, 120, 0.38) 85%,
+    rgba(2, 12, 60, 0.70) 100%
+  );
+}
+
+/* Subtle shimmer sweep */
+.orb-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    transparent 30%,
+    rgba(100, 180, 255, 0.08) 50%,
+    transparent 70%
+  );
+  animation: shimmerSweep 8s linear infinite;
+}
+
+/* ─── Label ─── */
+.orb-label {
+  color: rgba(170, 195, 240, 0.50);
+  font-size: 10.5px;
+  letter-spacing: 3.5px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* ═══ Orb Keyframes ═══ */
+
+@keyframes orbFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+@keyframes spherePulse {
+  0%, 100% {
+    box-shadow:
+      0 0 38px  rgba(48, 115, 255, 1.00),
+      0 0 72px  rgba(30,  88, 235, 0.60),
+      0 0 130px rgba(18,  58, 205, 0.28),
+      0 0 200px rgba(10,  38, 170, 0.10),
+      inset 0 -18px 45px rgba(0, 4, 55, 0.55),
+      inset 6px  6px 28px rgba(140, 205, 255, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 55px  rgba(60, 135, 255, 1.00),
+      0 0 105px rgba(40, 108, 245, 0.72),
+      0 0 170px rgba(24,  72, 218, 0.36),
+      0 0 250px rgba(14,  48, 182, 0.14),
+      inset 0 -22px 55px rgba(0, 4, 55, 0.55),
+      inset 8px  8px 38px rgba(170, 220, 255, 0.28);
+  }
+}
+
+@keyframes frameEdge {
+  0%, 100% { border-color: rgba(45, 90, 210, 0.28); }
+  50%       { border-color: rgba(60, 125, 245, 0.48); }
+}
+
+@keyframes outerGlow {
+  0%, 100% { opacity: 0.75; transform: scale(1.00); }
+  50%       { opacity: 1.00; transform: scale(1.10); }
+}
+
+@keyframes ringPulse {
+  0%   { opacity: 0.85; transform: scale(1.00); }
+  75%  { opacity: 0.00; transform: scale(1.65); }
+  100% { opacity: 0.00; transform: scale(1.65); }
+}
+
+@keyframes shimmerSweep {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   LOGO — NEXUS RESONANCE
+   z-5 · Centro de pantalla · Sobre toda la animación de fondo
+
+   Capas de animación (de afuera hacia adentro):
+     1. .logo-pulse (×3, escalonadas)  →  ondas expansivas continuas
+     2. .arc-outer                     →  arco giratorio CW, 10s
+     3. .arc-inner                     →  arco giratorio CCW, 6.5s
+     4. .logo-glow-bg                  →  halo radial que respira
+     5. .logo-img                      →  el logo flota + glow breathe
+
+   NOTA: logo.png debe ser PNG con fondo transparente.
+═══════════════════════════════════════════════════════════════════════ */
+
+#logo-nexus {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Envoltorio que levita en conjunto (todos los hijos se mueven con él) */
+.logo-floater {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logoFloat 8s ease-in-out infinite;
+}
+
+/* ── Halo radial de fondo — respira y escala suavemente ── */
+.logo-glow-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(18, 100, 245, 0.28) 0%,
+    rgba(8,  55, 200, 0.14) 52%,
+    transparent 72%
+  );
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  animation: glowBreathe 5s ease-in-out infinite;
+}
+
+/* ── Arcos orbitales ── */
+.logo-arc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Arco exterior: 3/4 cargado hacia arriba-derecha, gira CW lento */
+.arc-outer {
+  width: 170px;
+  height: 170px;
+  border: 1.5px solid transparent;
+  border-top-color:    rgba(28, 155, 255, 0.85);
+  border-right-color:  rgba(28, 155, 255, 0.40);
+  border-bottom-color: rgba(28, 155, 255, 0.08);
+  /* border-left: transparent — implícito */
+  transform: translate(-50%, -50%);
+  animation: arcCW 10s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(28, 155, 255, 0.55));
+}
+
+/* Arco interior: 1/2 cargado hacia arriba-izquierda, gira CCW más rápido */
+.arc-inner {
+  width: 144px;
+  height: 144px;
+  border: 1px solid transparent;
+  border-top-color:  rgba(90, 215, 255, 0.65);
+  border-left-color: rgba(90, 215, 255, 0.30);
+  /* border-right/bottom: transparent — implícitos */
+  transform: translate(-50%, -50%);
+  animation: arcCCW 6.5s linear infinite;
+}
+
+/* ── Pulsos expansivos — tres ondas desfasadas 1.5 s ── */
+.logo-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 1px solid rgba(38, 148, 255, 0.65);
+  z-index: 0;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulseExpand 4.5s ease-out infinite;
+}
+
+.pulse-b { animation-delay: 1.5s; }
+.pulse-c { animation-delay: 3.0s; }
+
+/* ── Imagen del logo ── */
+.logo-img {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  z-index: 3;
+  display: block;
+  animation: logoBreathe 5s ease-in-out infinite;
+}
+
+/* ═══ Logo Keyframes ═══ */
+
+/* Levitación vertical suave */
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px);   }
+  50%       { transform: translateY(-12px); }
+}
+
+/* Glow que respira entre tenue e intenso */
+@keyframes logoBreathe {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 12px rgba(0,  165, 255, 0.85))
+      drop-shadow(0 0 36px rgba(8,  100, 255, 0.45));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 22px rgba(30, 200, 255, 1.00))
+      drop-shadow(0 0 64px rgba(18, 138, 255, 0.80));
+  }
+}
+
+/* Halo de fondo que escala y respira */
+@keyframes glowBreathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1.00); opacity: 0.80; }
+  50%       { transform: translate(-50%, -50%) scale(1.22); opacity: 1.00; }
+}
+
+/* Rotación horaria — para arc-outer */
+@keyframes arcCW {
+  from { transform: translate(-50%, -50%) rotate(0deg);   }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Rotación antihoraria — para arc-inner */
+@keyframes arcCCW {
+  from { transform: translate(-50%, -50%) rotate(0deg);    }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+/* Onda que se expande y desvanece desde el tamaño del logo */
+@keyframes pulseExpand {
+  0% {
+    transform: translate(-50%, -50%) scale(1.00);
+    opacity: 0.70;
+    border-color: rgba(38, 148, 255, 0.65);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(2.40);
+    opacity: 0.00;
+    border-color: rgba(38, 148, 255, 0.00);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.40);
+    opacity: 0.00;
+  }
+}
